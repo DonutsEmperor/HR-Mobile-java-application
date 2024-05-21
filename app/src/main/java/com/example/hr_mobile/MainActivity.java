@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -29,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
     List<DataClass> dataList;
     DatabaseReference databaseReference;
     ValueEventListener eventListener;
+    SearchView searchView;
+    MyAdapter myAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
 
         fab = findViewById(R.id.fab);
         recyclerView = findViewById(R.id.recyclerView);
+        searchView = findViewById(R.id.searchView);
+        searchView.clearFocus();
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, 1);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -48,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
         dataList = new ArrayList<>();
 
-        MyAdapter adapter = new MyAdapter(MainActivity.this, dataList);
-        recyclerView.setAdapter(adapter);
+        myAdapter = new MyAdapter(MainActivity.this, dataList);
+        recyclerView.setAdapter(myAdapter);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Android Tutorials");
         dialog.show();
@@ -62,13 +68,25 @@ public class MainActivity extends AppCompatActivity {
                     DataClass data = item.getValue(DataClass.class);
                     dataList.add(data);
                 }
-                adapter.notifyDataSetChanged();
+                myAdapter.notifyDataSetChanged();
                 dialog.dismiss();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 dialog.dismiss();
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Search(newText);
+                return false;
             }
         });
 
@@ -81,5 +99,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    public void Search(String text) {
+        ArrayList<DataClass> searchList = new ArrayList<>();
+
+        for (DataClass data: dataList){
+            if(data.getDataTitle().toLowerCase().contains(text.toLowerCase())){
+                searchList.add(data);
+            }
+        }
+
+        myAdapter.Search(searchList);
     }
 }
