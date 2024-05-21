@@ -39,7 +39,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
                 intent.putExtra("Image", dataList.get(holder.getAdapterPosition()).getDataImage());
                 intent.putExtra("Description", dataList.get(holder.getAdapterPosition()).getDataDesc());
                 intent.putExtra("Title", dataList.get(holder.getAdapterPosition()).getDataTitle());
-                intent.putExtra("Key",dataList.get(holder.getAdapterPosition()).getKey());
+                //intent.putExtra("Key",dataList.get(holder.getAdapterPosition()).getKey());
                 intent.putExtra("Language", dataList.get(holder.getAdapterPosition()).getDataLang());
                 context.startActivity(intent);
             }
@@ -63,7 +63,7 @@ class MyViewHolder extends RecyclerView.ViewHolder{
         recImage = itemView.findViewById(R.id.recImage);
         recCard = itemView.findViewById(R.id.recCard);
         recDesc = itemView.findViewById(R.id.recDesc);
-        //recLang = itemView.findViewById(R.id.recLang);
+//        recLang = itemView.findViewById(R.id.recLang);
         recTitle = itemView.findViewById(R.id.recTitle);
     }
 }
