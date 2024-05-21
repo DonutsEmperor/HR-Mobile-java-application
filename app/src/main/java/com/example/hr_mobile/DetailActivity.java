@@ -10,16 +10,15 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.github.clans.fab.FloatingActionButton;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 public class DetailActivity extends AppCompatActivity {
-    TextView detailDesc, detailTitle, detailLang;
+    TextView detailDesc, detailFio, detailRole;
     ImageView detailImage;
-    FloatingActionButton deleteButton;
+    FloatingActionButton deleteButton, editButton;
     String key = ""; String imageUrl = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,16 +27,17 @@ public class DetailActivity extends AppCompatActivity {
 
         detailDesc = findViewById(R.id.detailDesc);
         detailImage = findViewById(R.id.detailImage);
-        detailTitle = findViewById(R.id.detailTitle);
-        detailLang = findViewById(R.id.detailLang);
+        detailFio = findViewById(R.id.detailFio);
+        detailRole = findViewById(R.id.detailRole);
         deleteButton = findViewById(R.id.deleteButton);
+        editButton = findViewById(R.id.editButton);
 
         Bundle bundle = getIntent().getExtras();
 
         if(bundle != null){
             detailDesc.setText(bundle.getString("Description"));
-            detailLang.setText(bundle.getString("Language"));
-            detailTitle.setText(bundle.getString("Title"));
+            detailRole.setText(bundle.getString("Role"));
+            detailFio.setText(bundle.getString("Name"));
             key = bundle.getString("Key");
             imageUrl = bundle.getString("Image");
             Glide.with(this).load(bundle.getString("Image")).into(detailImage);
@@ -50,15 +50,26 @@ public class DetailActivity extends AppCompatActivity {
                 FirebaseStorage storage = FirebaseStorage.getInstance();
 
                 StorageReference storageReference = storage.getReferenceFromUrl(imageUrl);
-                storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        reference.child(key).removeValue();
-                        Toast.makeText(DetailActivity.this, "Deleted", Toast.LENGTH_SHORT);
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        finish();
-                    }
-                });
+                storageReference.delete();
+
+                reference.child(key).removeValue();
+                Toast.makeText(DetailActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
+            }
+        });
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               Intent intent = new Intent(DetailActivity.this, UpdateActivity.class)
+                       .putExtra("Name", detailFio.getText().toString())
+                       .putExtra("Description", detailDesc.getText().toString())
+                       .putExtra("Role", detailRole.getText().toString())
+                       .putExtra("Image", imageUrl)
+                       .putExtra("Key", key);
+
+               startActivity(intent);
             }
         });
     }

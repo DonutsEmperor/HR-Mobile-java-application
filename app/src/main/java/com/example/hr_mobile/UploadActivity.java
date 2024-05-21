@@ -26,11 +26,17 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 public class UploadActivity extends AppCompatActivity {
 
     ImageView uploadImage;
     Button saveButton;
-    EditText uploadTopic, uploadDesc, uploadLang;
+    EditText uploadFio, uploadDesc, uploadRole;
     String ImageURL;
     Uri uri;
 
@@ -41,8 +47,8 @@ public class UploadActivity extends AppCompatActivity {
 
         uploadImage = findViewById(R.id.uploadImage);
         uploadDesc = findViewById(R.id.uploadDesc);
-        uploadTopic = findViewById(R.id.uploadTopic);
-        uploadLang = findViewById(R.id.uploadLang);
+        uploadFio = findViewById(R.id.uploadFio);
+        uploadRole = findViewById(R.id.uploadRole);
         saveButton = findViewById(R.id.saveButton);
 
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
@@ -79,6 +85,12 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     public void saveData() {
+
+        if(uri == null){
+            Toast.makeText(UploadActivity.this, "Choose the image", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         StorageReference storageReference = FirebaseStorage.getInstance().getReference()
                 .child("Android Images").child(uri.getLastPathSegment());
 
@@ -94,8 +106,10 @@ public class UploadActivity extends AppCompatActivity {
                 Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
                 while (!uriTask.isComplete());
                 Uri urlImage = uriTask.getResult();
+
                 ImageURL = urlImage.toString();
                 uploadData();
+
                 dialog.dismiss();
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -107,14 +121,17 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     public void uploadData() {
-        String title = uploadTopic.getText().toString();
+        String fio = uploadFio.getText().toString();
         String desc = uploadDesc.getText().toString();
-        String lang = uploadLang.getText().toString();
+        String role = uploadRole.getText().toString();
 
-        DataClass dataClass = new DataClass(title, desc, lang, ImageURL);
+        DataClass dataClass = new DataClass(fio, desc, role, ImageURL);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.US);
+        String currentDate = dateFormat.format(new Date());
 
         FirebaseDatabase.getInstance().getReference("Android Tutorials")
-                .child(title).setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
+                .child(currentDate).setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()) {

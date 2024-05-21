@@ -1,15 +1,12 @@
 package com.example.hr_mobile;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.MenuAdapter;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.View;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -18,11 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.concurrent.FutureTask;
 
 public class MainActivity extends AppCompatActivity {
     FloatingActionButton fab;
@@ -106,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<DataClass> searchList = new ArrayList<>();
 
         for (DataClass data: dataList){
-            if(data.getDataTitle().toLowerCase().contains(text.toLowerCase())){
+            if(data.getDataFIO().toLowerCase().contains(text.toLowerCase())){
                 searchList.add(data);
             }
         }

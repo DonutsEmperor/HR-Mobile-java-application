@@ -1,9 +1,9 @@
 package com.example.hr_mobile;
 
 public class DataClass {
-    private String dataTitle;
+    private String dataFIO;
     private String dataDesc;
-    private String dataLang;
+    private String dataRole;
     private String dataImage;
 
     public String getKey() {
@@ -16,26 +16,26 @@ public class DataClass {
 
     private String key;
 
-    public String getDataTitle() {
-        return dataTitle;
+    public String getDataFIO() {
+        return dataFIO;
     }
 
     public String getDataDesc() {
         return dataDesc;
     }
 
-    public String getDataLang() {
-        return dataLang;
+    public String getDataRole() {
+        return dataRole;
     }
 
     public String getDataImage() {
         return dataImage;
     }
 
-    public DataClass(String dataTitle, String dataDesc, String dataLang, String dataImage) {
-        this.dataTitle = dataTitle;
+    public DataClass(String dataFIO, String dataDesc, String dataRole, String dataImage) {
+        this.dataFIO = dataFIO;
         this.dataDesc = dataDesc;
-        this.dataLang = dataLang;
+        this.dataRole = dataRole;
         this.dataImage = dataImage;
     }
 

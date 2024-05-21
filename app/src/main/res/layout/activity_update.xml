@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".UpdateActivity">
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,6 +16,7 @@
         android:layout_marginStart="20dp"
         app:cardCornerRadius="30dp"
         app:cardElevation="20dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,6 +24,7 @@
             android:layout_gravity="center_horizontal"
             android:padding="20dp"
             android:background="@drawable/lavender_border">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -29,6 +32,7 @@
                 android:textSize="30sp"
                 android:textAlignment="center"
                 android:textColor="@color/lavender"/>
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
@@ -36,16 +40,18 @@
                 android:id="@+id/updateImage"
                 android:layout_marginTop="10dp"
                 android:scaleType="fitXY"/>
+
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:id="@+id/updateTitle"
+                android:id="@+id/updateFio"
                 android:background="@drawable/lavender_border"
                 android:layout_marginTop="20dp"
                 android:padding="16dp"
-                android:hint="Enter topic name"
+                android:hint="Enter you fio"
                 android:gravity="start|center_vertical"
                 android:textColor="@color/lavender"/>
+
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
@@ -56,24 +62,29 @@
                 android:hint="Enter description"
                 android:gravity="start|center_vertical"
                 android:textColor="@color/lavender"/>
+
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:id="@+id/updateLang"
+                android:id="@+id/updateRole"
                 android:background="@drawable/lavender_border"
                 android:layout_marginTop="20dp"
                 android:padding="16dp"
-                android:hint="Enter language"
+                android:hint="Enter role"
                 android:gravity="start|center_vertical"
                 android:textColor="@color/lavender"/>
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:text="Update"
-                android:id="@+id/updateButton"
+                android:text="Save"
+                android:id="@+id/editButton"
                 android:textSize="18sp"
                 android:layout_marginTop="20dp"
                 app:cornerRadius = "20dp"/>
+
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
+
 </ScrollView>
