@@ -72,7 +72,14 @@ public class UploadActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent photoPicker = new Intent(Intent.ACTION_PICK);
                 photoPicker.setType("image/*");
-                activityResultLauncher.launch(photoPicker);
+
+                try {
+                    activityResultLauncher.launch(photoPicker);
+                }
+                catch (Exception exception){
+                    Toast.makeText(UploadActivity.this, exception.getMessage(),
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
